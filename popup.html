@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quick Memo</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app" aria-label="Quick Memo">
+      <header class="header">
+        <div>
+          <h1>Quick Memo</h1>
+          <p id="saveStatus" class="status" aria-live="polite">読み込み中</p>
+        </div>
+        <button
+          id="themeToggleButton"
+          class="theme-toggle"
+          type="button"
+          aria-label="ダークテーマに切り替え"
+        >🌙</button>
+      </header>
+      <div id="statusMessage" class="status-message" aria-live="polite"></div>
+
+      <section class="composer" aria-label="一時メモ">
+        <textarea
+          id="memoInput"
+          placeholder="ここにメモを書く..."
+          spellcheck="true"
+          autofocus
+        ></textarea>
+        <p id="memoCharacterCount" class="character-count" aria-live="polite">0文字</p>
+        <div class="tag-controls">
+          <input
+            id="tagInput"
+            class="tag-input"
+            type="text"
+            placeholder="タグを入力（例：仕事、AI、買い物）"
+            aria-label="タグ"
+          >
+          <select id="tagColorSelect" class="tag-color-select" aria-label="タグ色">
+            <option value="blue">blue</option>
+            <option value="green">green</option>
+            <option value="pink">pink</option>
+            <option value="purple">purple</option>
+            <option value="gray" selected>gray</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button id="saveButton" class="primary" type="button">保存してクリア</button>
+          <button id="clearDraftButton" type="button">一時メモをクリア</button>
+        </div>
+      </section>
+
+      <section class="settings-section" aria-label="設定">
+        <label class="setting-field" for="historyLimitSelect">
+          <span>履歴の保存上限</span>
+          <select id="historyLimitSelect" class="history-limit-select">
+            <option value="50">50件</option>
+            <option value="100" selected>100件</option>
+            <option value="300">300件</option>
+            <option value="unlimited">無制限</option>
+          </select>
+        </label>
+        <p id="historyCount" class="history-count" aria-live="polite">履歴：0件</p>
+        <button id="resetSettingsButton" class="ghost reset-settings-button" type="button">設定をリセット</button>
+      </section>
+
+      <section class="history-section" aria-label="履歴">
+        <div class="section-heading">
+          <h2>履歴</h2>
+          <div class="history-tools">
+            <button id="downloadAllButton" class="ghost" type="button">全履歴をtxt保存</button>
+            <button id="clearAllButton" class="danger ghost" type="button">全履歴削除</button>
+          </div>
+        </div>
+        <input
+          id="historySearch"
+          class="history-search"
+          type="search"
+          placeholder="履歴を検索"
+          aria-label="履歴を検索"
+        >
+        <div id="tagFilterStatus" class="tag-filter-status" hidden>
+          <span id="tagFilterLabel"></span>
+          <button id="clearTagFilterButton" class="ghost" type="button">絞り込み解除</button>
+        </div>
+        <ul id="historyList" class="history-list"></ul>
+        <p id="emptyState" class="empty">まだ履歴はありません。</p>
+      </section>
+    </main>
+
+    <template id="historyItemTemplate">
+      <li class="history-item">
+        <div class="history-meta">
+          <time class="history-date"></time>
+          <span class="pinned-badge">ピン留め中</span>
+        </div>
+        <p class="history-text"></p>
+        <div class="history-tags"></div>
+        <div class="item-actions">
+          <button class="pin-button" type="button">ピン留め</button>
+          <button class="copy-button" type="button">コピー</button>
+          <button class="download-button" type="button">txt保存</button>
+          <button class="delete-button" type="button" aria-label="履歴を削除">削除</button>
+        </div>
+      </li>
+    </template>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
